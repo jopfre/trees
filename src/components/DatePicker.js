@@ -23,7 +23,6 @@ function DatePicker(props) {
     start: startDate,
     end: endDate,
   });
-  const { setAppSelectedDates } = props;
 
   const handleMonthChange = useCallback(
     (month, year) => setDate({ month, year }),
@@ -31,6 +30,7 @@ function DatePicker(props) {
   );
 
   // Set selected dates in the App component
+  const { setAppSelectedDates } = props;
   useEffect(() => {
     setAppSelectedDates(selectedDates);
   }, [selectedDates, setAppSelectedDates]);

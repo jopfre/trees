@@ -62,6 +62,7 @@ function App() {
 
     fetchData().then((data) => {
       const processedData = processData(data);
+      console.log(processedData);
       setData(processedData);
       setFilteredData(processedData);
       setDefaultSelectedDates({
