@@ -22,7 +22,7 @@ body {
 }
 
 .recharts-responsive-container {
-  height: calc(100vh - 116px) !important;
+  height: calc(100vh - 136px) !important;
 }
 
 .loading {

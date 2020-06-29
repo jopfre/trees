@@ -20,12 +20,12 @@ function Chart(props) {
         <Line type="monotone" dataKey="value" stroke="#8884d8" />
         <CartesianGrid vertical={false} />
         <XAxis dataKey="date" minTickGap={20}>
-          <Label value="Date" dy={20} position="insideBottom" />
+          <Label value="Date" dy={24} position="insideBottom" />
         </XAxis>
         <YAxis dataKey="value">
           <Label
             value="Trees planted"
-            dx={-20}
+            dx={-24}
             angle={-90}
             position="insideLeft"
           />
