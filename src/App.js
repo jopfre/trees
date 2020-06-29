@@ -9,7 +9,7 @@ import DatePicker from "./components/DatePicker";
 import "./App.css";
 
 function App() {
-  const [data, setData] = useState([]);
+  const [processedData, setProcessedData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [totalTreesPlanted, setTotalTreesPlanted] = useState([]);
   const [apiUrl] = useState("https://api.offset.earth/trees");
@@ -26,22 +26,22 @@ function App() {
   });
   const [isError, setIsError] = useState(false);
 
-  const processData = (data) => {
-    let treesPlantedByDate = [];
+  const processData = (rawData) => {
+    let processedData = [];
     let totalTreesPlanted = 0;
     // Reformat data so planting events are grouped by date and are in format recharts requires
-    data.forEach((plantingEvent) => {
+    rawData.forEach((plantingEvent) => {
       let newEventDate = plantingEvent.createdAt.substr(
         0,
         plantingEvent.createdAt.indexOf("T")
       );
-      let existingDateIndex = treesPlantedByDate.findIndex(
+      let existingDateIndex = processedData.findIndex(
         (singleDate) => singleDate.date === newEventDate
       );
       if (existingDateIndex > -1) {
-        treesPlantedByDate[existingDateIndex].value += plantingEvent.value;
+        processedData[existingDateIndex].value += plantingEvent.value;
       } else {
-        treesPlantedByDate.push({
+        processedData.push({
           date: newEventDate,
           value: plantingEvent.value,
         });
@@ -50,10 +50,10 @@ function App() {
     });
     setTotalTreesPlanted(totalTreesPlanted);
     // Sort by date
-    treesPlantedByDate.sort(function (a, b) {
+    processedData.sort(function (a, b) {
       return a.date.localeCompare(b.date);
     });
-    return treesPlantedByDate;
+    return processedData;
   };
 
   // Fetch data from API, process that data and set dependant states
@@ -71,9 +71,9 @@ function App() {
     setIsError(false);
 
     fetchData()
-      .then((data) => {
-        const processedData = processData(data);
-        setData(processedData);
+      .then((rawData) => {
+        const processedData = processData(rawData);
+        setProcessedData(processedData);
         setFilteredData(processedData);
         setDefaultSelectedDates({
           start: new Date(processedData[0].date),
@@ -98,7 +98,7 @@ function App() {
         );
       }
 
-      let filteredData = data.filter(isBetweenSelectedDates);
+      let filteredData = processedData.filter(isBetweenSelectedDates);
       setFilteredData(filteredData);
       let totalTreesPlanted = 0;
       filteredData.forEach((plantingDay) => {
@@ -107,7 +107,7 @@ function App() {
       setTotalTreesPlanted(totalTreesPlanted);
     };
     filterData(appSelectedDates);
-  }, [appSelectedDates, data]);
+  }, [appSelectedDates, processedData]);
 
   return (
     <AppProvider i18n={enTranslations}>
@@ -140,7 +140,7 @@ function App() {
                 </p>
                 <br />
                 <DatePicker
-                  data={data}
+                  data={processedData}
                   setAppSelectedDates={setAppSelectedDates}
                   defaultSelectedDates={defaultSelectedDates}
                 />
