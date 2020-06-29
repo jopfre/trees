@@ -4,16 +4,9 @@ import { DatePicker as PolarisDatePicker } from "@shopify/polaris";
 import "@shopify/polaris/styles.css";
 
 function DatePicker(props) {
-  let startDate = props.defaultSelectedDates.start;
-  let endDate = props.defaultSelectedDates.end;
-  /*
-   ** Define Polaris attribute values from data
-   ** TODO: investigate a bug with the default selected dates. These are getting set after the data fetch in App but then need to be overwritten here to prevent unintended behavior with the PolarisDatePicker changing which dates are available. Ideally these values could be pulled straight from the props.
-   */
-  if (props.data.length > 0) {
-    startDate = new Date(props.data[0].date);
-    endDate = new Date(props.data[props.data.length - 1].date);
-  }
+  //Define Polaris attribute values from props. These are calculated based on the processed data in App.
+  const startDate = props.defaultSelectedDates.start;
+  const endDate = props.defaultSelectedDates.end;
 
   const [{ month, year }, setDate] = useState({
     month: startDate.getMonth(),
@@ -43,7 +36,7 @@ function DatePicker(props) {
       onMonthChange={handleMonthChange}
       selected={selectedDates}
       allowRange={true}
-      disableDatesBefore={new Date(startDate.setDate(startDate.getDate() - 1))}
+      disableDatesBefore={startDate}
       disableDatesAfter={endDate}
     />
   );
