@@ -17,7 +17,7 @@ function Chart(props) {
         data={props.data}
         margin={{ top: 32, right: 32, bottom: 32, left: 32 }}
       >
-        <Line type="monotone" dataKey="value" stroke="#8884d8" />
+        <Line type="monotone" dataKey="value" stroke="#8884d8" dot={false} />
         <CartesianGrid vertical={false} />
         <XAxis dataKey="date" minTickGap={20}>
           <Label value="Date" dy={24} position="insideBottom" />
@@ -25,7 +25,7 @@ function Chart(props) {
         <YAxis dataKey="value">
           <Label
             value="Trees planted"
-            dx={-24}
+            dx={-20}
             angle={-90}
             position="insideLeft"
           />
