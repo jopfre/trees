@@ -7,6 +7,7 @@ import {
   YAxis,
   XAxis,
   Label,
+  Tooltip,
 } from "recharts";
 
 function Chart(props) {
@@ -29,6 +30,12 @@ function Chart(props) {
             position="insideLeft"
           />
         </YAxis>
+        <Tooltip
+          formatter={(value, name) => [
+            new Intl.NumberFormat("en").format(value),
+            "Trees",
+          ]}
+        />
       </LineChart>
     </ResponsiveContainer>
   );
