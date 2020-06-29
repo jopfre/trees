@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import enTranslations from "@shopify/polaris/locales/en.json";
-import { AppProvider, Layout, Card } from "@shopify/polaris";
-import { ReactComponent as LoadingIcon } from "./assets/loading-icon.svg";
+import { AppProvider, Layout, Card, Link } from "@shopify/polaris";
+
 import Chart from "./components/Chart";
 import DatePicker from "./components/DatePicker";
+
+import { ReactComponent as LoadingIcon } from "./assets/loading-icon.svg";
+import offsetEarth from "./assets/offset-earth.png";
 
 import "./App.css";
 
@@ -144,6 +147,20 @@ function App() {
                   setAppSelectedDates={setAppSelectedDates}
                   defaultSelectedDates={defaultSelectedDates}
                 />
+              </Card>
+
+              <Card title="About" sectioned>
+                <Card.Section title="Built by">
+                  <Link url="https://www.linkedin.com/in/jonah-freeland-6386a329/">
+                    Jonah Freeland
+                  </Link>
+                </Card.Section>
+                <Card.Section title="Data from">
+                  <Link url="https://offset.earth">Offset Earth</Link>
+                </Card.Section>
+                <Card.Section title="Code stored on">
+                  <Link url="https://github.com/jopfre/trees">GitHub</Link>
+                </Card.Section>
               </Card>
             </Layout.Section>
           </Layout>
