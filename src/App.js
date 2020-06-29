@@ -48,7 +48,6 @@ function App() {
       }
       totalTreesPlanted += plantingEvent.value;
     });
-    // TODO: refactor out of processData function
     setTotalTreesPlanted(totalTreesPlanted);
     // Sort by date
     treesPlantedByDate.sort(function (a, b) {
@@ -57,7 +56,7 @@ function App() {
     return treesPlantedByDate;
   };
 
-  // Fetch data from API, process that data and set depeedant states
+  // Fetch data from API, process that data and set dependant states
   useEffect(() => {
     const fetchData = async () => {
       try {
