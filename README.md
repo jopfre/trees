@@ -1,3 +1,15 @@
+# Trees
+
+Pulls tree planting data from the offset.earth api and displays trees planted by day on a Recharts' chart. Date filtering is available using a Polaris DatePicker.
+
+To run:
+`git clone https://github.com/jopfre/trees.git`
+`cd trees`
+`yarn install`
+`yarn start`
+
+Orginal create-react-app readme included below.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
