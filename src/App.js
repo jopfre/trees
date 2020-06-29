@@ -11,6 +11,7 @@ import "./App.css";
 function App() {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
+  const [totalTreesPlanted, setTotalTreesPlanted] = useState([]);
   const [apiUrl] = useState("https://api.offset.earth/trees");
   const [isLoading, setIsLoading] = useState(false);
   // Sensible defaults are set which are replaced when the real data is fetched from the API
@@ -27,6 +28,7 @@ function App() {
 
   const processData = (data) => {
     let treesPlantedByDate = [];
+    let totalTreesPlanted = 0;
     // Reformat data so planting events are grouped by date and are in format recharts requires
     data.forEach((plantingEvent) => {
       let newEventDate = plantingEvent.createdAt.substr(
@@ -44,7 +46,10 @@ function App() {
           value: plantingEvent.value,
         });
       }
+      totalTreesPlanted += plantingEvent.value;
     });
+    // TODO: refactor out of processData function
+    setTotalTreesPlanted(totalTreesPlanted);
     // Sort by date
     treesPlantedByDate.sort(function (a, b) {
       return a.date.localeCompare(b.date);
@@ -52,7 +57,7 @@ function App() {
     return treesPlantedByDate;
   };
 
-  // Fetch data from API, set default selected dates and loading state
+  // Fetch data from API, process that data and set depeedant states
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -65,6 +70,7 @@ function App() {
 
     setIsLoading(true);
     setIsError(false);
+
     fetchData()
       .then((data) => {
         const processedData = processData(data);
@@ -95,6 +101,11 @@ function App() {
 
       let filteredData = data.filter(isBetweenSelectedDates);
       setFilteredData(filteredData);
+      let totalTreesPlanted = 0;
+      filteredData.forEach((plantingDay) => {
+        totalTreesPlanted += plantingDay.value;
+      });
+      setTotalTreesPlanted(totalTreesPlanted);
     };
     filterData(appSelectedDates);
   }, [appSelectedDates, data]);
@@ -116,6 +127,9 @@ function App() {
           <Layout>
             <Layout.Section>
               <Card title="Trees planted by date" sectioned>
+                <p>
+                  Total trees planted for selected range: {totalTreesPlanted}
+                </p>
                 <Chart data={filteredData} />
               </Card>
             </Layout.Section>
