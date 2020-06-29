@@ -23,6 +23,7 @@ function App() {
     start: defaultSelectedDates.start,
     end: defaultSelectedDates.end,
   });
+  const [isError, setIsError] = useState(false);
 
   const processData = (data) => {
     let treesPlantedByDate = [];
@@ -53,24 +54,32 @@ function App() {
 
   // Fetch data from API, set default selected dates and loading state
   useEffect(() => {
-    setIsLoading(true);
-
     const fetchData = async () => {
-      const result = await axios(apiUrl);
-      return await result.data;
+      try {
+        const result = await axios(apiUrl);
+        return await result.data;
+      } catch (error) {
+        throw Error(error);
+      }
     };
 
-    fetchData().then((data) => {
-      const processedData = processData(data);
-      console.log(processedData);
-      setData(processedData);
-      setFilteredData(processedData);
-      setDefaultSelectedDates({
-        start: new Date(processedData[0].date),
-        end: new Date(processedData[processedData.length - 1].date),
+    setIsLoading(true);
+    setIsError(false);
+    fetchData()
+      .then((data) => {
+        const processedData = processData(data);
+        setData(processedData);
+        setFilteredData(processedData);
+        setDefaultSelectedDates({
+          start: new Date(processedData[0].date),
+          end: new Date(processedData[processedData.length - 1].date),
+        });
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsError(true);
       });
-      setIsLoading(false);
-    });
   }, [apiUrl]);
 
   // Filter data when date range is selected in DatePicker
@@ -96,7 +105,12 @@ function App() {
         {isLoading ? (
           <div className="loading">
             <LoadingIcon />
-            <p>Loading</p>
+            <br />
+            {isError ? (
+              <p>Something went wrong, please try again later.</p>
+            ) : (
+              <p>Loading</p>
+            )}
           </div>
         ) : (
           <Layout>
