@@ -7,7 +7,6 @@ import Chart from "./components/Chart";
 import DatePicker from "./components/DatePicker";
 
 import { ReactComponent as LoadingIcon } from "./assets/loading-icon.svg";
-import offsetEarth from "./assets/offset-earth.png";
 
 import "./App.css";
 
