@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import enTranslations from "@shopify/polaris/locales/en.json";
-import { AppProvider, Layout, Card, Link } from "@shopify/polaris";
+import { AppProvider, Page, Layout, Card, Link } from "@shopify/polaris";
 
 import Chart from "./components/Chart";
 import DatePicker from "./components/DatePicker";
@@ -113,7 +113,7 @@ function App() {
 
   return (
     <AppProvider i18n={enTranslations}>
-      <div id="app">
+      <Page>
         {isLoading ? (
           <div className="loading">
             <LoadingIcon />
@@ -164,7 +164,7 @@ function App() {
             </Layout.Section>
           </Layout>
         )}
-      </div>
+      </Page>
     </AppProvider>
   );
 }

@@ -17,12 +17,8 @@ body {
   font-size: 16px;
 }
 
-#app {
-  padding: 16px;
-}
-
 .recharts-responsive-container {
-  height: calc(100vh - 136px) !important;
+  height: calc(100vh - 144px) !important;
 }
 
 .loading {
